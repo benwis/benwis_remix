@@ -1,6 +1,8 @@
 import { Link } from "@remix-run/react";
-import { LoaderFunction, redirect } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { getUser } from "~/session.server";
+
 export const loader: LoaderFunction = async ({
     params, request
   }) => {
@@ -10,7 +12,9 @@ export const loader: LoaderFunction = async ({
     return redirect("/login")
    }
    return null;
-};export default function AdminIndex() {
+};
+
+export default function AdminIndex() {
   return (
     <p>
       <Link to="new" className="text-blue-600 underline">

@@ -14,8 +14,9 @@ import {
 } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-import { getUser } from "./session.server";
+import { getUser, isMe } from "./session.server";
 import { Nav, Footer } from "./components";
+import { useLoaderData } from "@remix-run/react";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
@@ -29,15 +30,19 @@ export const meta: MetaFunction = () => ({
 
 type LoaderData = {
   user: Awaited<ReturnType<typeof getUser>>;
+  admin: Awaited<ReturnType<typeof isMe>>;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({
     user: await getUser(request),
+    admin: await isMe(request),
   });
 };
 
 export default function App() {
+  const { admin } = useLoaderData<LoaderData>();
+  console.log(`admin: ${admin}`);
   return (
     <html lang="en" className="h-full">
       <head>
@@ -45,7 +50,7 @@ export default function App() {
         <Links />
       </head>
       <body className="h-screen dark:bg-gray-900 max-w-5xl mx-auto flex flex-col">
-        <Nav/>
+        <Nav admin={admin}/>
         <Outlet />
         <Footer/>
         <ScrollRestoration />

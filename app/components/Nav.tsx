@@ -1,6 +1,4 @@
 import { Link } from "@remix-run/react";
-import { LoaderFunction, redirect } from "@remix-run/node";
-import { getUser } from "~/session.server";
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
@@ -13,7 +11,7 @@ const navigation = [
 
   ]
   
-export function Nav() {
+export function Nav(admin: boolean = false) {
   return (
     <nav className="relative bg-gray-50 dark:bg-gray-900 dark:text-white overflow-hidden">
       <div className="relative pt-6 pb-16 md:pb-6 sm:pb-24">
@@ -44,6 +42,9 @@ export function Nav() {
                     {item.name}
                   </Link>
                 ))}
+                {admin ? <Link to="posts/admin" className="font-medium text-white hover:decoration-yellow-400">
+                    Admin
+                </Link> : null}
               </div>
               <div className="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">          
                 <span className="inline-flex rounded-md shadow mx-4">
@@ -123,12 +124,12 @@ export function Nav() {
                     </a>
                   ))}
                 </div>
-                <a
-                  href="#"
+                <Link
+                  to="login"
                   className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:decoration-yellow-400"
                 >
                   Log in
-                </a>
+                </Link>
               </div>
             </Popover.Panel>
           </Transition>
