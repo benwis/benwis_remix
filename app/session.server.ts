@@ -45,7 +45,7 @@ export async function getUser(request: Request) {
 
 export async function isMe(request: Request) {
   const userId = await getUserId(request);
-  if (userId === undefined) return null;
+  if (userId === undefined) return false;
 
   const user = await getUserById(userId);
   if (user && user.email == "ben@benw.is") return true;
