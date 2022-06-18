@@ -9,6 +9,7 @@ import hljs from 'highlight.js';
 import rust from 'highlight.js/lib/languages/rust';
 import codeStyles from 'highlight.js/styles/github.css';
 import { markdownToHtml } from "~/models/markdown.server";
+import { isMe } from "~/session.server";
 
 export function links() {
     return [
@@ -19,14 +20,16 @@ export function links() {
     ];
   }
 
-type LoaderData = { post: Post; html: string };
+type LoaderData = { post: Post; html: string, admin: boolean };
 
 export const loader: LoaderFunction = async ({
-    params,
+    params, request
   }) => {
     invariant(params.slug, `params.slug is required`);
     const post = await getPost(params.slug);
     invariant(post, `Post not found: ${params.slug}`);
+
+    const admin = await isMe(request);
 
     // Set options
 // `highlight` example uses https://highlightjs.org
@@ -62,23 +65,32 @@ marked.setOptions({
     const femark2html = render_markdown(post.markdown);
     const femark2End = performance.now();
     console.log(`Femark Time: ${femark2End - femark2Start}ms`);
-    return json<LoaderData>({ post, html: html });
+    return json<LoaderData>({ admin, post, html: html });
 };
   
   export default function PostSlug() {
-    const { post, html } = useLoaderData<LoaderData>();
+    const { admin, post, html } = useLoaderData<LoaderData>();
     let postDate = new Date(post.createdAt);
-    let parsedDate = `${postDate.getFullYear()}-${postDate.getMonth()+1}-${postDate.getDate()-1} ${postDate.getHours()}:${postDate.getMinutes()}:${postDate.getSeconds()}`;
+    let parsedDate = `${postDate.getFullYear()}-${postDate.getMonth()}-${postDate.getDate()} ${postDate.getHours()}:${postDate.getMinutes()}:${postDate.getSeconds()}`;
     return (
-      <main className="mx-auto w-full max-w-5xl px-6">
-        <Link to="/posts" className="dark:text-white">Back to Posts</Link>
-        <h1 className="my-3 text-3xl dark:text-white">
+      <main className="mx-auto max-w-prose min-w-prose px-6">
+        <div className="w-full">
+
+        <div className="flex justify-between w-full">
+            <Link to="/posts" className="dark:text-white">Back to Posts</Link>
+            {admin ? <div className="dark:text-white">
+            <Link className="dark:text-white no-underline" to={`/posts/admin/${post.slug}`}> Edit</Link>
+        </div> : null}
+        </div>
+        
+        <h1 className="mb-4 text-3xl font-bold tracking-tight text-black dark:text-white md:text-5xl">
           {post.title}
         </h1>
         <div className="dark:text-white mb-2 border-b-2 pb-2">
             {parsedDate}
         </div>
-        <div className="prose dark:text-white" dangerouslySetInnerHTML={{ __html: html }} />
+        <div className="prose lg:prose-xl dark:prose-invert dark:text-white w-full" dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
       </main>
     );
   }

@@ -22,6 +22,7 @@ export const loader: LoaderFunction = async ({
     invariant(params.slug, `params.slug is required`);
     const post = await getPost(params.slug);
     invariant(post, `Post not found: ${params.slug}`);
+
     return json<LoaderData>({ post });
 };
 

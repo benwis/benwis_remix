@@ -1,4 +1,4 @@
-app = "bento-box-indie-85b7"
+app = "bento-box-indie"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = [ ]
