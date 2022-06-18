@@ -9,6 +9,7 @@ type ActionData =
   | {
       title: null | string;
       slug: null | string;
+      excerpt: null | string;
       markdown: null | string;
     }
   | undefined;
@@ -20,12 +21,15 @@ export const action: ActionFunction = async ({
 
   const title = formData.get("title");
   const slug = formData.get("slug");
+  const excerpt = formData.get("excerpt");
   const markdown = formData.get("markdown");
 
   const errors: ActionData = {
     title: title ? null : "Title is required",
     slug: slug ? null : "Slug is required",
+    excerpt: excerpt ? null : "Excerpt is required",
     markdown: markdown ? null : "Markdown is required",
+
   };
   const hasErrors = Object.values(errors).some(
     (errorMessage) => errorMessage
@@ -43,11 +47,15 @@ export const action: ActionFunction = async ({
     "slug must be a string"
   );
   invariant(
+    typeof excerpt === "string",
+    "excerpt must be a string"
+  );
+  invariant(
     typeof markdown === "string",
     "markdown must be a string"
   );
 
-  await createPost({ title, slug, markdown });
+  await createPost({ title, slug, excerpt, markdown });
 
   return redirect("/posts/admin");
 };

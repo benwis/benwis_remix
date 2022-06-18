@@ -24,7 +24,6 @@ export default function Posts() {
         {posts.map((post) => {
           let postDate = new Date(post.createdAt);
           let parsedDate = `${postDate.getFullYear()}-${postDate.getMonth()+1}-${postDate.getDate()-1} ${postDate.getHours()}:${postDate.getMinutes()}:${postDate.getSeconds()}`;
-          console.log(`parsedDate: ${parsedDate}`);
           return (
           <ul key={post.slug}>
             <Link

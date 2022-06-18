@@ -82,7 +82,7 @@ export function Nav({admin = true}:{admin?: boolean}) {
                 <span className="inline-flex rounded-md shadow mx-4">
                   <Link
                     to="login"
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-gray-700 bg-yellow-400 dark:text-white hover:bg-yellow-600"
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-gray-700 bg-yellow-400 dark:text-text-gray-700 hover:bg-yellow-600"
                   >
                     Log in
                   </Link>

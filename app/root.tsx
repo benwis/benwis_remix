@@ -43,7 +43,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function App() {
   const { admin } = useLoaderData<LoaderData>();
-  console.log(`admin: ${admin}`);
   return (
     <html lang="en" className="h-full">
       <head>
