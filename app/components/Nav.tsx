@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link, NavLink } from "@remix-run/react";
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
@@ -38,13 +38,13 @@ export function Nav({admin = true}:{admin?: boolean}) {
               </div>
               <div className="hidden md:flex md:space-x-10">
                 {navigation.map((item) => (
-                  <Link key={item.name} to={item.href} className="font-medium text-white hover:decoration-yellow-400">
+                  <NavLink key={item.name} to={item.href} className={({ isActive }) => isActive ? "font-medium text-white decoration-yellow-400 underline" : "font-medium text-white hover:decoration-yellow-400 hover:underline" } >
                     {item.name}
-                  </Link>
+                  </NavLink>
                 ))}
-                {admin ? <Link to="posts/admin" className="font-medium text-white hover:decoration-yellow-400">
+                {admin ? <NavLink to="posts/admin" className="font-medium text-white hover:decoration-yellow-400 hover:underline">
                     Admin
-                </Link> : null}
+                </NavLink> : null}
               </div>
               <div className="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0">          
                 <span className="inline-flex rounded-md shadow mx-4">
@@ -82,7 +82,7 @@ export function Nav({admin = true}:{admin?: boolean}) {
                 <span className="inline-flex rounded-md shadow mx-4">
                   <Link
                     to="login"
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:decoration-yellow-400"
+                    className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-gray-700 bg-yellow-400 dark:text-white hover:bg-yellow-600"
                   >
                     Log in
                   </Link>
@@ -107,7 +107,7 @@ export function Nav({admin = true}:{admin?: boolean}) {
               <div className="rounded-lg shadow-md bg-white  dark:bg-gray-900 ring-1 ring-black ring-opacity-5 overflow-hidden">
                 <div className="px-5 pt-4 flex items-center justify-between">
                   <div className="-mr-2">
-                    <Popover.Button className="bg-white  dark:bg-gray-900 dark:text-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:decoration-yellow-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                    <Popover.Button className="bg-white dark:bg-gray-900 dark:text-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                       <span className="sr-only">Close menu</span>
                       <XIcon className="h-6 w-6" aria-hidden="true" />
                     </Popover.Button>
@@ -115,18 +115,18 @@ export function Nav({admin = true}:{admin?: boolean}) {
                 </div>
                 <div className="px-2 pt-2 pb-3">
                   {navigation.map((item) => (
-                    <a
+                    <NavLink
                       key={item.name}
-                      href={item.href}
-                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-white hover:decoration-yellow-400"
+                      to={item.href}
+                      className={({ isActive }) => isActive ? "block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-white decoration-yellow-400 underline" : "block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-white hover:decoration-yellow-400 hover:underline" }
                     >
                       {item.name}
-                    </a>
+                    </NavLink>
                   ))}
                 </div>
                 <Link
                   to="login"
-                  className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:decoration-yellow-400"
+                  className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 dark:bg-gray-900"
                 >
                   Log in
                 </Link>
