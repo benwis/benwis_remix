@@ -13,7 +13,7 @@ const navigation = [
   
 export function Nav({admin = true}:{admin?: boolean}) {
   return (
-    <nav className="relative bg-gray-50 dark:bg-gray-900 dark:text-white overflow-hidden">
+    <nav className="relative bg-gray-50 dark:bg-gray-900 dark:text-white">
       <div className="relative pt-6 pb-16 md:pb-6 sm:pb-24">
         <Popover>
           <div className="max-w-7xl mx-auto px-4 sm:px-6">

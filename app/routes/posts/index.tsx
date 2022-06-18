@@ -17,15 +17,15 @@ export const loader = async () => {
 
 export default function Posts() {
   const { posts } = useLoaderData<LoaderData>();
-  console.log(`POSTS: ${JSON.stringify(posts)}`);
   return (
     <main className="dark:text-white max-w-5xl px-12">
       <h1 className="mb-4 text-3xl text-center font-bold tracking-tight text-black dark:text-white md:text-5xl">Posts</h1>
-      <Link to="admin" className="text-red-600 underline">
-  Admin
-</Link>
       <ul>
-        {posts.map((post) => (
+        {posts.map((post) => {
+          let postDate = new Date(post.createdAt);
+          let parsedDate = `${postDate.getFullYear()}-${postDate.getMonth()+1}-${postDate.getDate()-1} ${postDate.getHours()}:${postDate.getMinutes()}:${postDate.getSeconds()}`;
+          console.log(`parsedDate: ${parsedDate}`);
+          return (
           <ul key={post.slug}>
             <Link
               to={post.slug}
@@ -34,13 +34,13 @@ export default function Posts() {
             <li className="mb-8 text-lg">
             <div className="inline-flex justify-between w-full">
               <h4 className="text-lg font-medium md:text-xl">{post.title}</h4>
-              <p className=" text-left text-gray-500 dark:text-gray-400 md:mb-0 md:text-right">{post.createdAt}</p>
+              <p className=" text-left text-gray-500 dark:text-gray-400 md:mb-0 md:text-right">{parsedDate}</p>
             </div>
             <p className="text-gray-500">{post.excerpt}</p>
             </li>
             </Link>
           </ul>
-        ))}
+        )})}
       </ul>
     </main>
   );

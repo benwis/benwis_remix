@@ -14,12 +14,13 @@ import {
 } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
+import globalStyles from "./styles/globalStyles.css";
 import { getUser, isMe } from "./session.server";
 import { Nav, Footer } from "./components";
 import { useLoaderData } from "@remix-run/react";
 
 export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
+  return [{ rel: "stylesheet", href: tailwindStylesheetUrl }, {rel: "stylesheet", href: globalStyles}];
 };
 
 export const meta: MetaFunction = () => ({
