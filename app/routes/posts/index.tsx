@@ -23,7 +23,6 @@ export default function Posts() {
       <ul>
         {posts.map((post) => {
           let postDate = new Date(post.createdAt).toDateString();
-          console.log(`POST ${post.title} ${post.createdAt}`)
           return (
           <ul key={post.slug}>
             <Link

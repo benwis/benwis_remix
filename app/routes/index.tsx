@@ -52,8 +52,9 @@ export default function Index() {
 				<span className="font-semibold">Rust, Typescript, WASM, Python, React, Svelte</span>
 			</h2>
 			<p className="mb-16 text-gray-600">
-				<a href="https://github.com/benwis" className="rounded font-bold text-yellow-400 inline-flex items-center px-0 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stone-500 hover:text-yellow-500"
-					>Check out my work!</a>
+				<a href="https://github.com/benwis" className="rounded font-bold text-yellow-400 inline-flex items-center px-0 py-2 border border-transparent font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stone-500 hover:text-yellow-500"
+					>Check out my work!
+				</a>
 			</p>
 		</div>
 	</div>
