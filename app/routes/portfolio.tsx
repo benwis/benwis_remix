@@ -1,19 +1,6 @@
-import type { LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { PortfolioCard } from "../components/PortfolioCard";
-import { getPosts } from "~/models/post.server";
-
-type LoaderData = {
-  posts: Awaited<ReturnType<typeof getPosts>>;
-};
-
-export const loader: LoaderFunction = async () => {
-  return json({ posts: await getPosts() });
-};
 
 export default function Portfolio() {
-  const { posts } = useLoaderData<LoaderData>();
   return (
     <article
 	className="mx-auto mb-16 flex w-full max-w-2xl flex-col items-start justify-center px-4 sm:px-8"
