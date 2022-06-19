@@ -1,19 +1,4 @@
-import type { LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
-
-import { getPosts } from "~/models/post.server";
-
-type LoaderData = {
-  posts: Awaited<ReturnType<typeof getPosts>>;
-};
-
-export const loader: LoaderFunction = async () => {
-  return json({ posts: await getPosts() });
-};
-
 export default function About() {
-  const { posts } = useLoaderData<LoaderData>();
   return (
     <div
 	className="mx-auto grid max-w-2xl grid-cols-1 items-start justify-center gap-y-20 border-gray-200 px-4 pb-16 dark:border-gray-900 sm:px-8 md:grid-cols-2 md:gap-x-20"
