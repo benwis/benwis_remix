@@ -29,10 +29,10 @@ export default function About() {
 							I am
 		
 							<span
-								className="relative ml-2 inline-block before:absolute before:-inset-1 before:block before:rounded-lg before:bg-gray-900 before:py-8"
+								className="relative ml-2 inline-block before:absolute before:-inset-1 before:block before:rounded-lg before:py-8"
 							>
 								<span
-                  className="brand relative py-8 text-5xl uppercase text-yellow-400 dark:text-yellow-400"
+                  className="brand relative py-8 text-5xl uppercase text-yellow-400"
                   >
                     BENWIS
 								</span>
@@ -49,7 +49,7 @@ export default function About() {
 						<h1 className="text-2xl font-bold tracking-tight text-black dark:text-white md:text-2xl">
 							AKA
 								<span
-									className="relative ml-2 inline-block before:absolute before:-inset-1 before:block before:rounded-lg before:bg-gray-900"
+									className="relative ml-2 inline-block before:absolute before:-inset-1 before:block before:rounded-lg"
 								>
 									<span
 										className="brand relative skew-y-3 py-8 text-4xl uppercase text-yellow-400 dark:text-yellow-400"

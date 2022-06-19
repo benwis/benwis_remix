@@ -61,14 +61,14 @@ export const action: ActionFunction = async ({
 };
 
 
-const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg text-black`;
+const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg text-black bg-white`;
 
 export default function NewPost() {
     const errors = useActionData();
     const transition = useTransition();
     const isCreating = Boolean(transition.submission);
   return (
-    <Form method="post">
+    <Form method="post" className="text-black dark:text-white">
       <p>
         <label>
           Post Title:{" "}

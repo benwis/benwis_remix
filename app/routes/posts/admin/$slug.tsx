@@ -90,7 +90,7 @@ export const action: ActionFunction = async ({
   return redirect(`/posts/admin/${slug}`);
 };
 
-const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg text-black`;
+const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg text-black bg-white`;
 
 export default function AdminPost() {
     const { post } = useLoaderData<LoaderData>();
@@ -98,7 +98,7 @@ export default function AdminPost() {
     const transition = useTransition();
     const isCreating = Boolean(transition.submission);
   return (
-    <Form method="post" key ={post.slug}>
+    <Form method="post" key ={post.slug} className="text-black dark:text-white">
     <p>
       <label>
         Post Title:{" "}

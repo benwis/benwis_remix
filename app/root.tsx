@@ -56,7 +56,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 function App() {
-  const { admin } = useLoaderData<LoaderData>();
+  const { admin, user } = useLoaderData<LoaderData>();
   const [theme] = useTheme();
   const data = useLoaderData<LoaderData>();
 
@@ -68,7 +68,7 @@ function App() {
         <ThemeHead ssrTheme={Boolean(data.theme)} />
       </head>
       <body className="h-screen bg-white dark:bg-gray-900 max-w-5xl mx-auto flex flex-col">
-        <Nav admin={admin}/>
+        <Nav admin={admin} user={user}/>
         <Outlet />
         <Footer/>
         <ThemeBody ssrTheme={Boolean(data.theme)} />

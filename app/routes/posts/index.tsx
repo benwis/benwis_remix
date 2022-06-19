@@ -32,7 +32,7 @@ export default function Posts() {
             >
             <li className="mb-8 text-lg">
             <div className="inline-flex justify-between w-full">
-              <h4 className="text-lg font-medium md:text-xl">{post.title}</h4>
+              <h4 className="text-lg font-medium md:text-xl text-black dark:text-white">{post.title}</h4>
               <p className=" text-left text-gray-500 dark:text-gray-400 md:mb-0 md:text-right">{postDate}</p>
             </div>
             <p className="text-gray-500">{post.excerpt}</p>
