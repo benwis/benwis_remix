@@ -86,7 +86,7 @@ marked.setOptions({
         <h1 className="mb-4 text-3xl font-bold tracking-tight text-black dark:text-white md:text-5xl">
           {post.title}
         </h1>
-        <div className="dark:text-white mb-2">
+        <div className="dark:text-white text-black mb-2">
             {postDate}
         </div>
         <div
