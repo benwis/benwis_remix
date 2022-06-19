@@ -4,6 +4,7 @@ import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Theme, useTheme } from "~/utils/theme-provider";
 import type { User } from "@prisma/client";
+import { Form } from "@remix-run/react";
 
 const navigation = [
     { name: 'Home', href: '/' },
@@ -78,12 +79,14 @@ export function Nav({admin = true, user}:{admin?: boolean, user?: User | null}) 
                   }
                 </span>
                 <span className="inline-flex rounded-md shadow mx-4">
-                  {user ? <Link
-                    to="logout"
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-gray-700 bg-yellow-400 dark:text-text-gray-700 hover:bg-yellow-600"
-                  >
-                    Log out
-                  </Link> :<Link
+                  {user ? <Form method="post" action="logout">
+                    <button
+                        type="submit"
+                        className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-gray-700 bg-yellow-400 dark:text-text-gray-700 hover:bg-yellow-600"
+                    >
+                        Log out
+                    </button>
+                  </Form> :<Link
                     to="login"
                     className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-gray-700 bg-yellow-400 dark:text-text-gray-700 hover:bg-yellow-600"
                   >
