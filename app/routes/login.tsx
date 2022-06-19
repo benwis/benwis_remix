@@ -93,11 +93,13 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
+      <h1 className="mb-4 text-3xl text-center font-bold tracking-tight text-black dark:text-white md:text-5xl">Login</h1>
+
         <Form method="post" className="space-y-6">
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
             >
               Email address
             </label>
@@ -125,7 +127,7 @@ export default function LoginPage() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
             >
               Password
             </label>
@@ -151,7 +153,7 @@ export default function LoginPage() {
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
-            className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
+            className="w-full rounded bg-yellow-400 py-2 px-4 text-white dark:text-gray-700 hover:bg-yellow-600 focus:bg-yellow-400"
           >
             Log in
           </button>
@@ -165,7 +167,7 @@ export default function LoginPage() {
               />
               <label
                 htmlFor="remember"
-                className="ml-2 block text-sm text-gray-900"
+                className="ml-2 block text-sm text-gray-900 dark:text-white"
               >
                 Remember me
               </label>

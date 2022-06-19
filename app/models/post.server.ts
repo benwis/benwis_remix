@@ -4,8 +4,25 @@ export type { Post };
 export { renderMarkdown } from "@benwis/femark-napi";
 export { render_markdown } from "@benwis/femark"
 
-export async function getPosts() {
-    return prisma.post.findMany();
+export async function getPosts(take: number = 0) {
+    if (take != 0) {
+        return prisma.post.findMany({
+            orderBy: [
+                {
+                    createdAt: 'desc',
+                },
+            ], take
+        });
+    }
+    else {
+        return prisma.post.findMany({
+            orderBy: [
+                {
+                    createdAt: 'desc',
+                },
+            ]
+        });
+    }
 }
 export async function getPost(slug: string) {
     return prisma.post.findUnique({ where: { slug } });

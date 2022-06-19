@@ -1,6 +1,6 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { getUser } from "~/session.server";
-import { Form, useActionData, useTransition, Link, useLoaderData } from "@remix-run/react";
+import { Form, useActionData, useTransition, useLoaderData } from "@remix-run/react";
 import { updatePost, deletePost, getPost } from "~/models/post.server";
 import { json, redirect } from "@remix-run/node";
 import type { ActionFunction } from "@remix-run/node";

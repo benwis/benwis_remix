@@ -94,11 +94,12 @@ export default function Join() {
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
+      <h1 className="mb-4 text-3xl text-center font-bold tracking-tight text-black dark:text-white md:text-5xl">Join</h1>
         <Form method="post" className="space-y-6">
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
             >
               Email address
             </label>
@@ -126,7 +127,7 @@ export default function Join() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
             >
               Password
             </label>
@@ -152,7 +153,7 @@ export default function Join() {
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
-            className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
+            className="w-full rounded bg-yellow-400  py-2 px-4 text-white dark:text-gray-700 hover:bg-yellow-600 focus:bg-yellow-500"
           >
             Create Account
           </button>

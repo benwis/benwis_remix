@@ -22,8 +22,8 @@ export default function Posts() {
       <h1 className="mb-4 text-3xl text-center font-bold tracking-tight text-black dark:text-white md:text-5xl">Posts</h1>
       <ul>
         {posts.map((post) => {
-          let postDate = new Date(post.createdAt);
-          let parsedDate = `${postDate.getFullYear()}-${postDate.getMonth()+1}-${postDate.getDate()-1} ${postDate.getHours()}:${postDate.getMinutes()}:${postDate.getSeconds()}`;
+          let postDate = new Date(post.createdAt).toDateString();
+          console.log(`POST ${post.title} ${post.createdAt}`)
           return (
           <ul key={post.slug}>
             <Link
@@ -33,7 +33,7 @@ export default function Posts() {
             <li className="mb-8 text-lg">
             <div className="inline-flex justify-between w-full">
               <h4 className="text-lg font-medium md:text-xl">{post.title}</h4>
-              <p className=" text-left text-gray-500 dark:text-gray-400 md:mb-0 md:text-right">{parsedDate}</p>
+              <p className=" text-left text-gray-500 dark:text-gray-400 md:mb-0 md:text-right">{postDate}</p>
             </div>
             <p className="text-gray-500">{post.excerpt}</p>
             </li>

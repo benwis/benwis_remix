@@ -40,6 +40,7 @@
     "@remix-run/serve": "^1.6.0",
     "@remix-run/server-runtime": "^1.6.0",
     "bcryptjs": "^2.4.3",
+    "clsx": "^1.1.1",
     "highlight.js": "^11.5.1",
     "marked": "^4.0.17",
     "react": "^17.0.2",

@@ -47,7 +47,7 @@ marked.setOptions({
   });
 
     const markedStart = performance.now();
-    const markedHtml = marked.parse(post.markdown);
+    marked.parse(post.markdown);
     const markedEnd = performance.now();
     console.log(`Marked Time: ${markedEnd - markedStart}ms`);
 
@@ -57,21 +57,21 @@ marked.setOptions({
     console.log(`Femark-napi Time: ${femarkEnd - femarkStart}ms`);
 
     const remarkStart = performance.now();
-    const remarkHtml = await markdownToHtml(post.markdown);
+    await markdownToHtml(post.markdown);
     const remarkEnd = performance.now();
     console.log(`Remark Time: ${remarkEnd - remarkStart}ms`);
 
     const femark2Start = performance.now();
-    const femark2html = render_markdown(post.markdown);
+    render_markdown(post.markdown);
     const femark2End = performance.now();
     console.log(`Femark Time: ${femark2End - femark2Start}ms`);
+
     return json<LoaderData>({ admin, post, html: html });
 };
   
   export default function PostSlug() {
     const { admin, post, html } = useLoaderData<LoaderData>();
-    let postDate = new Date(post.createdAt);
-    let parsedDate = `${postDate.getFullYear()}-${postDate.getMonth()}-${postDate.getDate()} ${postDate.getHours()}:${postDate.getMinutes()}:${postDate.getSeconds()}`;
+    let postDate = new Date(post.createdAt).toDateString();
     return (
       <main className="mx-auto max-w-prose min-w-prose px-6">
         <div className="w-full">
@@ -86,9 +86,12 @@ marked.setOptions({
         <h1 className="mb-4 text-3xl font-bold tracking-tight text-black dark:text-white md:text-5xl">
           {post.title}
         </h1>
-        <div className="dark:text-white mb-2 border-b-2 pb-2">
-            {parsedDate}
+        <div className="dark:text-white mb-2">
+            {postDate}
         </div>
+        <div
+		className="-mx-4 my-2 flex h-1 w-[100vw] bg-gradient-to-r from-yellow-400 via-rose-400 to-cyan-500 sm:mx-0 sm:w-full"
+	/>
         <div className="prose lg:prose-xl dark:prose-invert dark:text-white w-full" dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </main>

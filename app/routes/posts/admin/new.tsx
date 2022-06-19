@@ -61,7 +61,7 @@ export const action: ActionFunction = async ({
 };
 
 
-const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg`;
+const inputClassName = `w-full rounded border border-gray-500 px-2 py-1 text-lg text-black`;
 
 export default function NewPost() {
     const errors = useActionData();
@@ -96,6 +96,20 @@ export default function NewPost() {
         </label>
       </p>
       <p>
+      <label>
+        Excerpt:{" "}
+        {errors?.excerpt ? (
+          <em className="text-red-600">{errors.excerpt}</em>
+        ) : null}
+         <textarea
+        id="excerpt"
+        rows={5}
+        name="excerpt"
+        className={`${inputClassName} font-mono`}
+      />
+      </label>
+    </p>
+      <p>
         <label htmlFor="markdown">Markdown:           
             {errors?.markdown ? (
             <em className="text-red-600">
@@ -115,7 +129,7 @@ export default function NewPost() {
       <p className="text-right">
         <button
           type="submit"
-          className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
+          className="rounded bg-yellow-400 py-2 px-4 text-gray-700 hover:bg-yellow-600 focus:bg-yellow-400 disabled:bg-yellow-300"
           disabled={isCreating}
         >
           {isCreating ? "Creating..." : "Create Post"}
