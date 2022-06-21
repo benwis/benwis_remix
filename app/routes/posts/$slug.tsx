@@ -2,13 +2,10 @@ import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import { marked } from "marked";
 import type { Post } from "~/models/post.server";
 import { getPost, processMarkdownToHtml, matter } from "~/models/post.server";
-import hljs from 'highlight.js';
-import rust from 'highlight.js/lib/languages/rust';
+
 import codeStyles from 'highlight.js/styles/github.css';
-import { markdownToHtml } from "~/models/markdown.server";
 import { isMe } from "~/session.server";
 
 export function links() {
@@ -32,7 +29,7 @@ export const loader: LoaderFunction = async ({
     const admin = await isMe(request);
 
     //Extract front matter from md
-    const {content, data} = matter(post.markdown);
+    const {content} = matter(post.markdown);
     // Set options
 // `highlight` example uses https://highlightjs.org
 // hljs.registerLanguage('rust', rust);
@@ -58,9 +55,9 @@ export const loader: LoaderFunction = async ({
     // const html = renderMarkdown(content);
     // const femarkEnd = performance.now();
 
-    const femarkTSStart = performance.now();
+    // const femarkTSStart = performance.now();
     const femarkTsHtml = processMarkdownToHtml(content);
-    const femarkTSEnd = performance.now();
+    // const femarkTSEnd = performance.now();
 
     // const remarkStart = performance.now();
     // await markdownToHtml(content);
