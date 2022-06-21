@@ -4,18 +4,7 @@ import { useLoaderData, Link } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import type { Post } from "~/models/post.server";
 import { getPost, processMarkdownToHtml, matter } from "~/models/post.server";
-
-import codeStyles from 'highlight.js/styles/github.css';
 import { isMe } from "~/session.server";
-
-export function links() {
-    return [
-      {
-        rel: "stylesheet",
-        href: codeStyles,
-      },
-    ];
-  }
 
 type LoaderData = { post: Post; html: string, admin: boolean };
 
@@ -31,7 +20,7 @@ export const loader: LoaderFunction = async ({
     //Extract front matter from md
     const {content} = matter(post.markdown);
     const femarkTsHtml = processMarkdownToHtml(content); 
-     
+
     return json<LoaderData>({ admin, post, html: femarkTsHtml });
 };
   
