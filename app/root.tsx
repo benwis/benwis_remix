@@ -43,6 +43,7 @@ type LoaderData = {
   user: Awaited<ReturnType<typeof getUser>>;
   admin: Awaited<ReturnType<typeof isMe>>;
   theme: Theme | null;
+  env: "development" | "production" | "test"; 
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -52,11 +53,13 @@ export const loader: LoaderFunction = async ({ request }) => {
     user: await getUser(request),
     admin: await isMe(request),
     theme: themeSession.getTheme(),
+    env: process.env.NODE_ENV,
+
   });
 };
 
 function App() {
-  const { admin, user } = useLoaderData<LoaderData>();
+  const { admin, user, env } = useLoaderData<LoaderData>();
   const [theme] = useTheme();
   const data = useLoaderData<LoaderData>();
 
@@ -66,6 +69,14 @@ function App() {
         <Meta />
         <Links />
         <ThemeHead ssrTheme={Boolean(data.theme)} />
+        {env === "production" && (
+        <script
+          src="https://clean-piano.benw.is/script.js"
+          data-spa="auto"
+          data-site="PCCFUQTY"
+          defer
+        ></script>
+      )}
       </head>
       <body className="h-screen bg-white dark:bg-gray-900 max-w-5xl mx-auto flex flex-col">
         <Nav admin={admin} user={user}/>
