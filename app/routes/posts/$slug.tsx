@@ -4,7 +4,7 @@ import { useLoaderData, Link } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { marked } from "marked";
 import type { Post } from "~/models/post.server";
-import { getPost, renderMarkdown, render_markdown } from "~/models/post.server";
+import { getPost, processMarkdownToHtml, matter } from "~/models/post.server";
 import hljs from 'highlight.js';
 import rust from 'highlight.js/lib/languages/rust';
 import codeStyles from 'highlight.js/styles/github.css';
@@ -31,42 +31,48 @@ export const loader: LoaderFunction = async ({
 
     const admin = await isMe(request);
 
+    //Extract front matter from md
+    const {content, data} = matter(post.markdown);
     // Set options
 // `highlight` example uses https://highlightjs.org
-hljs.registerLanguage('rust', rust);
+// hljs.registerLanguage('rust', rust);
 
-marked.setOptions({
-    renderer: new marked.Renderer(),
-    highlight: function(code, lang) {
-      const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-      return hljs.highlight(code, { language }).value;
-    },
-    langPrefix: 'hljs language-', // highlight.js css expects a top-level 'hljs' class.
-    pedantic: false,
-    gfm: true,
-  });
+// marked.setOptions({
+//     renderer: new marked.Renderer(),
+//     highlight: function(code, lang) {
+//       const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+//       return hljs.highlight(code, { language }).value;
+//     },
+//     langPrefix: 'hljs language-', // highlight.js css expects a top-level 'hljs' class.
+//     // pedantic: false,
+//     // gfm: true,
+//   });
 
-    const markedStart = performance.now();
-    marked.parse(post.markdown);
-    const markedEnd = performance.now();
-    console.log(`Marked Time: ${markedEnd - markedStart}ms`);
+    // console.log("marked,femark-napi, femark-ts, remark, femark");
 
-    const femarkStart = performance.now();
-    const html = renderMarkdown(post.markdown);
-    const femarkEnd = performance.now();
-    console.log(`Femark-napi Time: ${femarkEnd - femarkStart}ms`);
+    // const markedStart = performance.now();
+    // marked.parse(content);
+    // const markedEnd = performance.now();
 
-    const remarkStart = performance.now();
-    await markdownToHtml(post.markdown);
-    const remarkEnd = performance.now();
-    console.log(`Remark Time: ${remarkEnd - remarkStart}ms`);
+    // const femarkStart = performance.now();
+    // const html = renderMarkdown(content);
+    // const femarkEnd = performance.now();
 
-    const femark2Start = performance.now();
-    render_markdown(post.markdown);
-    const femark2End = performance.now();
-    console.log(`Femark Time: ${femark2End - femark2Start}ms`);
+    const femarkTSStart = performance.now();
+    const femarkTsHtml = processMarkdownToHtml(content);
+    const femarkTSEnd = performance.now();
 
-    return json<LoaderData>({ admin, post, html: html });
+    // const remarkStart = performance.now();
+    // await markdownToHtml(content);
+    // const remarkEnd = performance.now();
+
+    // const femark2Start = performance.now();
+    // render_markdown(content);
+    // const femark2End = performance.now();
+
+    // console.log(`${markedEnd - markedStart}, ${femarkEnd - femarkStart},${femarkTSEnd - femarkTSStart},${remarkEnd - remarkStart},${femark2End - femark2Start}`)
+    
+    return json<LoaderData>({ admin, post, html: femarkTsHtml });
 };
   
   export default function PostSlug() {
@@ -83,7 +89,7 @@ marked.setOptions({
         </div> : null}
         </div>
         
-        <h1 className="mb-4 text-3xl font-bold tracking-tight text-black dark:text-white md:text-5xl">
+        <h1 className="mb-4 text-3xl text-black dark:text-white md:text-5xl">
           {post.title}
         </h1>
         <div className="dark:text-white text-black mb-2">
@@ -92,7 +98,7 @@ marked.setOptions({
         <div
 		className="-mx-4 my-2 flex h-1 w-[100vw] bg-gradient-to-r from-yellow-400 via-rose-400 to-cyan-500 sm:mx-0 sm:w-full"
 	/>
-        <div className="prose lg:prose-xl dark:prose-invert dark:text-white w-full" dangerouslySetInnerHTML={{ __html: html }} />
+        <div className="text-black prose lg:prose-xl dark:prose-invert dark:text-white text-base w-full mt-8" dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </main>
     );

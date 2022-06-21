@@ -1,8 +1,9 @@
 import { prisma } from "~/db.server";
+import matter from "gray-matter";
 import type { Post } from "@prisma/client";
 export type { Post };
-export { renderMarkdown } from "@benwis/femark-napi";
-export { render_markdown } from "@benwis/femark"
+export { processMarkdownToHtml } from "@benwis/femark";
+export { matter };
 
 export async function getPosts(take: number = 0) {
     if (take != 0) {

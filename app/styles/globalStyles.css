@@ -1,13 +1,39 @@
+/* @font-face {
+	font-family: 'JetBrains Mono';
+	src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2'),
+		url('/fonts/JetBrainsMono-Regular.ttf') format('ttf');
+} */
+@font-face {
+	font-family: 'Neue Plak Regular';
+	 src: url('/fonts/Neue Plak Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Neue Plak Black';
+	src: url('/fonts/Neue Plak Black.ttf') format('truetype');
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Neue Plak Black', sans-serif;
+}
+body {
+	font-family: 'Neue Plak Regular', serif;
+}
+p {
+	margin-block-end: 1em;
+	font-size: 1.3em;
+}
+h1, h2, h3, h4, h5, h6 a{
+	text-decoration: none;
+}
 pre {
-    border-radius: 20px;
-    padding: 20px;
     text-align: start;
-    margin: 20px 0px;
     /* width: max-content; */
     width: 100%;
     display: inline-block;
-    overflow-x: auto;
-    border: 1px solid #facc15;
+}
+
+.anchor{
+	text-decoration: none;
 }
 
 .min-w-prose{
@@ -28,3 +54,299 @@ pre {
 	.brand {
 		font-family: 'Horizon W03 Rg';
 	}
+
+/* Syntax Highlighting Styles, derived from neovim Material theme */
+/* https://github.com/marko-cerovac/material.nvim */
+:root{
+	/* Common Colors */
+	--white:				#EEFFFF;
+	--gray:				    #717CB4;
+	--black : 				#000000;
+	--red :   				#F07178;
+	--green : 				#C3E88D;
+	--yellow :				#FFCB6B;
+	--blue :  				#82AAFF;
+	--paleblue :			#B0C9FF;
+	--cyan :  				#89DDFF;
+	--purple :				#C792EA;
+	--orange :				#F78C6C;
+	--pink :  				#FF9CAC;
+
+	/*Dark colors */
+	--darkred :				#DC6068;
+	--darkgreen :			#ABCF76;
+	--darkyellow :			#E6B455;
+	--darkblue :			#6E98EB;
+	--darkcyan :			#71C6E7;
+	--darkpurple :			#B480D6;
+	--darkorange :			#E2795B;
+
+	--error :				#FF5370;
+	--link :				#80CBC4;
+	--cursor :				#FFCC00;
+	--title :				#EEFFFF;
+
+	--none :      			NONE;
+	
+	/* Dark Mode Variables */
+	--dark-bg :				#292D3E;
+	--dark-bg_alt :			#1B1E2B;
+	--dark-fg :				#A6ACCD;
+	--dark-text :			#717CB4;
+	--dark-comments :		#676E95;
+	--dark-selection :		#444267;
+	--dark-contrast :		#202331;
+	--dark-active :			#414863;
+	--dark-border :			#364367;
+	--dark-line_numbers :	#3A3F58;
+	--dark-highlight :		#444267;
+	--dark-disabled :		#515772;
+	--dark-accent :			#AB47BC;
+
+	/* Light Mode Variables */
+	--light-fg :				#546E7A;
+	--light-text :				#94A7B0;
+	--light-comments :			#AABFC9;
+	--light-selection : 		#80CBC4;
+	--light-line_numbers :		#CFD8DC;
+	--light-accent :			#00BCD4;
+
+	--light-red :				#E53935;
+	--light-green :				#91B859;
+	--light-yellow :			#F6A434;
+	--light-blue : 				#6182B8;
+	--light-paleblue :			#8796B0;
+	--light-cyan : 				#39ADB5;
+	--light-purple :			#7C4DFF;
+	--light-orange :			#F76D47;
+	--light-pink : 				#FF5370;
+
+	--light-bg :				#FAFAFA;
+	--light-bg_alt :			#FFFFFF;
+	--light-contrast :			#EEEEEE;
+	--light-active :			#E7E7E8;
+	--light-border :			#D3E1E8;
+	--light-highlight :			#E7E7E8;
+	--light-disabled :			#D2D4D5;
+	--light-cursor :			#272727;
+
+	--light-white :				#FFFFFF;
+	--light-gray : 				#717CB4;
+    --light-title : var(--light-black);
+}
+
+.code-block {
+	display: flex;
+	flex-direction: column;
+    align-items: flex-start;
+    border-radius: 4px;
+    padding: 0;
+    border: 1px solid #facc15;
+	margin: 1.8rem 0;
+	font-family: 'JetBrains Mono', monospace;
+}
+.code-block-inner{
+	padding: 0.8rem;
+	font-family: 'JetBrains Mono', monospace;
+	margin: 0 0;
+
+}
+.language-tag{
+	background-color: #facc15;
+    color: var(--black);
+
+	line-height: 1.1;
+    width: auto;
+    display: block;
+    float: left;
+    padding: 0.2rem 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 0 0 8px 0;
+}
+/* Light Highlighting Classes */
+
+.light .code-block{
+	background-color: var(--light-bg);
+}
+.light .code-block-inner{
+	background-color: var(--light-bg);
+	color: var(--light-black);
+}
+.light .hh0{
+	/* Attribute */
+	color: var(--light-yellow);
+}
+.light .hh1{
+	/* Constant */
+	color: var(--light-yellow);
+}
+.light .hh2{
+	/* function.builtIn */
+	color: var(--light-cyan);
+}
+.light .hh3{
+	/* function */
+	color: var(--light-blue);
+}
+.light .hh4{
+	/* keyword */
+	color: var(--light-cyan);
+}
+.light .hh5{
+	/* operator */
+	color: var(--light-cyan)
+}
+.light .hh6{
+	/* property */
+	color: var(--light-gray);
+}
+.light .hh7{
+	/* punctuation */
+	color: var(--light-cyan);
+}
+.light .hh8{
+	/* punctuation.bracket */
+	color: var(--light-cyan);
+}
+.light .hh9{
+	/* punctuation.delimiter */
+	color: var(--light-cyan);
+}
+.light .hh10{
+	/* string */
+	color: var(--light-green);
+}
+.light .hh11{
+	/* string.special */
+	color: var(--light-green);
+}
+.light .hh12{
+	/* tag */
+	color: var(--light-red);
+}
+.light .hh13{
+	/* type */
+	color: var(--light-purple);
+}
+.light .hh14{
+	/* type.builtin */
+	color: var(--light-red);
+}
+.light .hh15{
+	/* variable */
+	color: var(--dark-fg);
+}
+.light .hh16{
+	/* variable.builtin */
+	color: var(--light-fg);
+}
+.light .hh17{
+	/* variable.parameter */
+	color: var(--light-fg)
+}
+.light .hh18{
+	/* comment */
+	color: var(--light-comments);
+}
+.light .hh19{
+	/* macro */
+	color: var(--light-blue);
+}
+.light .hh20{
+	/* label */ 
+	color: var(--light-red)
+}
+
+/* Dark Highlighting Classes */
+.dark .code-block{
+	background-color: var(--dark-bg);
+}
+.dark .code-block-inner{
+	background-color: var(--dark-bg);
+	color: var(--white);
+}
+.dark .hh0{
+	/* Attribute */
+	color: var(--yellow);
+}
+.dark .hh1{
+	/* Constant */
+	color: var(--yellow);
+}
+.dark .hh2{
+	/* function.builtIn */
+	color: var(--cyan);
+}
+.dark .hh3{
+	/* function */
+	color: var(--blue);
+}
+.dark .hh4{
+	/* keyword */
+	color: var(--cyan);
+}
+.dark .hh5{
+	/* operator */
+	color: var(--cyan)
+}
+.dark .hh6{
+	/* property */
+	color: var(--gray);
+}
+.dark .hh7{
+	/* punctuation */
+	color: var(--cyan);
+}
+.dark .hh8{
+	/* punctuation.bracket */
+	color: var(--cyan);
+}
+.dark .hh9{
+	/* punctuation.delimiter */
+	color: var(--cyan);
+}
+.dark .hh10{
+	/* string */
+	color: var(--green);
+}
+.dark .hh11{
+	/* string.special */
+	color: var(--green);
+}
+.dark .hh12{
+	/* tag */
+	color: var(--red);
+}
+.dark .hh13{
+	/* type */
+	color: var(--purple);
+}
+.dark .hh14{
+	/* type.builtin */
+	color: var(--red);
+}
+.dark .hh15{
+	/* variable */
+	color: var(--dark-fg);
+}
+.dark .hh16{
+	/* variable.builtin */
+	color: var(--dark-fg);
+}
+.dark .hh17{
+	/* variable.parameter */
+	color: var(--dark-fg)
+}
+.dark .hh18{
+	/* comment */
+	color: var(--dark-comments);
+}
+.dark .hh19{
+	/* macro */
+	color: var(--blue);
+}
+.dark .hh20{
+	/* label */ 
+	color: var(--red)
+}
