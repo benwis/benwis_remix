@@ -30,45 +30,8 @@ export const loader: LoaderFunction = async ({
 
     //Extract front matter from md
     const {content} = matter(post.markdown);
-    // Set options
-// `highlight` example uses https://highlightjs.org
-// hljs.registerLanguage('rust', rust);
-
-// marked.setOptions({
-//     renderer: new marked.Renderer(),
-//     highlight: function(code, lang) {
-//       const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-//       return hljs.highlight(code, { language }).value;
-//     },
-//     langPrefix: 'hljs language-', // highlight.js css expects a top-level 'hljs' class.
-//     // pedantic: false,
-//     // gfm: true,
-//   });
-
-    // console.log("marked,femark-napi, femark-ts, remark, femark");
-
-    // const markedStart = performance.now();
-    // marked.parse(content);
-    // const markedEnd = performance.now();
-
-    // const femarkStart = performance.now();
-    // const html = renderMarkdown(content);
-    // const femarkEnd = performance.now();
-
-    // const femarkTSStart = performance.now();
-    const femarkTsHtml = processMarkdownToHtml(content);
-    // const femarkTSEnd = performance.now();
-
-    // const remarkStart = performance.now();
-    // await markdownToHtml(content);
-    // const remarkEnd = performance.now();
-
-    // const femark2Start = performance.now();
-    // render_markdown(content);
-    // const femark2End = performance.now();
-
-    // console.log(`${markedEnd - markedStart}, ${femarkEnd - femarkStart},${femarkTSEnd - femarkTSStart},${remarkEnd - remarkStart},${femark2End - femark2Start}`)
-    
+    const femarkTsHtml = processMarkdownToHtml(content); 
+     
     return json<LoaderData>({ admin, post, html: femarkTsHtml });
 };
   
