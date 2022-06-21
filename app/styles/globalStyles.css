@@ -350,3 +350,34 @@ pre {
 	/* label */ 
 	color: var(--red)
 }
+/* Table of Contents Styling */
+.dark .table-of-contents-parent {
+ background-color: var(--dark-bg);
+}
+.light .table-of-contents-parent {
+	background-color: var(--light-bg);
+}
+.table-of-contents{
+	list-style: none;
+	padding-left: 0;
+}
+.toc-entry{
+	margin: 0;
+	padding: 0;
+}
+
+.level-2{
+	text-indent: 20px;
+}
+.level-3{
+	text-indent: 40px;
+}
+.level-4{
+	text-indent: 60px;
+}
+.level-5{
+	text-indent: 80px;
+}
+.level-6{
+	text-indent: 100px;
+}

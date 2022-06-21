@@ -6,7 +6,7 @@ import type { Post } from "~/models/post.server";
 import { getPost, processMarkdownToHtml, matter } from "~/models/post.server";
 import { isMe } from "~/session.server";
 
-type LoaderData = { post: Post; html: string, admin: boolean };
+type LoaderData = { post: Post; html: string, toc: string | undefined, admin: boolean };
 
 export const loader: LoaderFunction = async ({
     params, request
@@ -19,13 +19,13 @@ export const loader: LoaderFunction = async ({
 
     //Extract front matter from md
     const {content} = matter(post.markdown);
-    const femarkTsHtml = processMarkdownToHtml(content); 
+    const {content: html_content, toc} = processMarkdownToHtml(content); 
 
-    return json<LoaderData>({ admin, post, html: femarkTsHtml });
+    return json<LoaderData>({ admin, post, html: html_content, toc });
 };
   
   export default function PostSlug() {
-    const { admin, post, html } = useLoaderData<LoaderData>();
+    const { admin, post, html, toc } = useLoaderData<LoaderData>();
     let postDate = new Date(post.createdAt).toDateString();
     return (
       <main className="mx-auto max-w-prose min-w-prose px-6">
@@ -37,7 +37,6 @@ export const loader: LoaderFunction = async ({
             <Link className="dark:text-white no-underline" to={`/posts/admin/${post.slug}`}> Edit</Link>
         </div> : null}
         </div>
-        
         <h1 className="mb-4 text-3xl text-black dark:text-white md:text-5xl">
           {post.title}
         </h1>
@@ -47,6 +46,12 @@ export const loader: LoaderFunction = async ({
         <div
 		className="-mx-4 my-2 flex h-1 w-[100vw] bg-gradient-to-r from-yellow-400 via-rose-400 to-cyan-500 sm:mx-0 sm:w-full"
 	/>
+   {toc ? <section className="dark:bg-gray-800 p-4 mt-4 table-of-contents-parent">
+            <h2 className="text-xl text-black dark:text-white md:text-2xl">Contents</h2>
+            <div className="text-black prose lg:prose-xl dark:prose-invert dark:text-white text-base w-full" dangerouslySetInnerHTML={{ __html: toc }} />   
+          </section>: null}
+          
+
         <div className="text-black prose lg:prose-xl dark:prose-invert dark:text-white text-base w-full mt-8" dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </main>
