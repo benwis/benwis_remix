@@ -1,4 +1,15 @@
 import { PortfolioCard } from "../components/PortfolioCard";
+import type { MetaFunction } from "@remix-run/node";
+
+export const meta: MetaFunction = () => {
+	
+	return {
+		title: "My Portfolio",
+		description: "A collection of things I've built or helped build.",
+		'og:title': "My Portfolio",
+		'og:description': "A collection of things I've built or helped build.",
+	}
+}
 
 export default function Portfolio() {
   return (

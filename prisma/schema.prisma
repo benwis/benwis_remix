@@ -40,8 +40,9 @@ model Post {
   slug     String @id
   title    String
   markdown String
-  excerpt String?
-
+  excerpt  String?
+  hero     String?
+  author     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

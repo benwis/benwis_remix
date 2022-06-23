@@ -1,14 +1,25 @@
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { getPosts } from "~/models/post.server";
 
+
+export const meta: MetaFunction = () => {
+	
+	return {
+    title: "benwis Blog",
+    description: "The potentially misguided ramblings of a Rust developer flailing around on the web",
+		'og:title': "benwis Blog",
+		'og:description': "The potentially misguided ramblings of a Rust developer flailing around on the web",
+		'og:image':`https://benwis.imgix.net/pictureofMe.jpeg`,
+	}
+}
 type LoaderData = {
   // this is a handy way to say: "posts is whatever type getPosts resolves to"
   posts: Awaited<ReturnType<typeof getPosts>>;
 };
 
-export const loader = async () => {
+export const loader: LoaderFunction = async () => {
   return json<LoaderData>({
     posts: await getPosts(),
   });

@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -23,6 +23,18 @@ export const loader: LoaderFunction = async ({
 
     return json<LoaderData>({ admin, post, html: html_content, toc });
 };
+
+export const meta: MetaFunction = ({data}: {data: LoaderData}) => {
+	if (!data || !data.post) {
+		return {};
+	}
+
+	return {
+		'og:title': data.post.title,
+		'og:description': data.post.excerpt,
+		'og:image': `https://benw.is/action/meta/${data.post.slug}`,
+	}
+}
   
   export default function PostSlug() {
     const { admin, post, html, toc } = useLoaderData<LoaderData>();

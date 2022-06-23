@@ -11,6 +11,7 @@ type ActionData =
       slug: null | string;
       excerpt: null | string;
       markdown: null | string;
+      hero: null | string;
     }
   | undefined;
 
@@ -21,6 +22,7 @@ export const action: ActionFunction = async ({
 
   const title = formData.get("title");
   const slug = formData.get("slug");
+  const hero = formData.get("hero");
   const excerpt = formData.get("excerpt");
   const markdown = formData.get("markdown");
 
@@ -29,6 +31,7 @@ export const action: ActionFunction = async ({
     slug: slug ? null : "Slug is required",
     excerpt: excerpt ? null : "Excerpt is required",
     markdown: markdown ? null : "Markdown is required",
+    hero: hero ? null : "Hero is required",
 
   };
   const hasErrors = Object.values(errors).some(
@@ -54,8 +57,12 @@ export const action: ActionFunction = async ({
     typeof markdown === "string",
     "markdown must be a string"
   );
+  invariant(
+    typeof hero === "string",
+    "hero must be a string"
+  );
 
-  await createPost({ title, slug, excerpt, markdown });
+  await createPost({ title, slug, excerpt, markdown, hero });
 
   return redirect("/posts/admin");
 };
@@ -91,6 +98,19 @@ export default function NewPost() {
           <input
             type="text"
             name="slug"
+            className={inputClassName}
+          />
+        </label>
+      </p>
+      <p>
+        <label>
+          Hero Image:{" "}
+          {errors?.hero ? (
+            <em className="text-red-600">{errors.hero}</em>
+          ) : null}
+          <input
+            type="text"
+            name="hero"
             className={inputClassName}
           />
         </label>

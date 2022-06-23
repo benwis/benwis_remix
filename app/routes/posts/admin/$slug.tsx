@@ -32,6 +32,7 @@ type ActionData =
       slug: null | string;
       excerpt: null | string;
       markdown: null | string;
+      hero: null | string;
     }
   | undefined;
 
@@ -44,6 +45,8 @@ export const action: ActionFunction = async ({
   const slug = formData.get("slug");
   const excerpt = formData.get("excerpt");
   const markdown = formData.get("markdown");
+  const hero = formData.get("hero");
+
   const deleteButton = formData.get("deleteButton");
 
   if (deleteButton == "delete"){
@@ -59,6 +62,7 @@ export const action: ActionFunction = async ({
     slug: slug ? null : "Slug is required",
     excerpt: excerpt ? null : "Excerpt is required",
     markdown: markdown ? null : "Markdown is required",
+    hero: hero? null : "Hero is required",
 
   };
   const hasErrors = Object.values(errors).some(
@@ -84,8 +88,11 @@ export const action: ActionFunction = async ({
     typeof markdown === "string",
     "markdown must be a string"
   );
-
-  await updatePost({ title, slug, excerpt, markdown });
+  invariant(
+    typeof hero === "string",
+    "hero must be a string"
+  );
+  await updatePost({ title, slug, excerpt, markdown, hero });
 
   return redirect(`/posts/admin/${slug}`);
 };
@@ -125,6 +132,20 @@ export default function AdminPost() {
           name="slug"
           className={inputClassName}
           defaultValue={post.slug}
+        />
+      </label>
+    </p>
+    <p>
+      <label>
+        Hero:{" "}
+        {errors?.hero ? (
+          <em className="text-red-600">{errors.hero}</em>
+        ) : null}
+        <input
+          type="text"
+          name="hero"
+          className={inputClassName}
+          defaultValue={post.hero || ""}
         />
       </label>
     </p>

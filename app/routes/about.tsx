@@ -1,3 +1,16 @@
+import type { MetaFunction } from "@remix-run/node";
+
+export const meta: MetaFunction = () => {
+	
+
+	return {
+		title: "About Me",
+		description: "A page describing me.",
+		'og:title': "About Me",
+		'og:description': "A page describing me.",
+	}
+}
+
 export default function About() {
   return (
     <div

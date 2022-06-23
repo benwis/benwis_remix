@@ -1,7 +1,7 @@
 import indexStyles from "~/styles/indexStyles.css";
 import { FeatureCard } from "~/components";
 import { Link } from "@remix-run/react";
-import type { LoaderFunction } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { getPosts } from "~/models/post.server";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
@@ -14,7 +14,16 @@ export function links() {
     },
   ];
 }
-
+export const meta: MetaFunction = () => {
+	
+	return {
+    title: "benwis",
+    description: "Ben Wishovich's personal website",
+		'og:title': "benwis",
+		'og:description': "Ben Wishovich's personal website",
+		'og:image':`https://benwis.imgix.net/pictureofMe.jpeg`,
+	}
+}
 type LoaderData = {   
 	// this is a handy way to say: "posts is whatever type getPosts resolves to"
 	posts: Awaited<ReturnType<typeof getPosts>>; 

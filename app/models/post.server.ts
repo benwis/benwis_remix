@@ -29,12 +29,12 @@ export async function getPost(slug: string) {
     return prisma.post.findUnique({ where: { slug } });
 }
 export async function createPost(
-    post: Pick<Post, "slug" | "title" | "markdown" | "excerpt">
+    post: Pick<Post, "slug" | "title" | "markdown" | "excerpt" | "hero">
 ) {
     return prisma.post.create({ data: post });
 }
 
-export async function updatePost(post: Pick<Post, "slug" | "title" | "markdown" | "excerpt">
+export async function updatePost(post: Pick<Post, "slug" | "title" | "markdown" | "excerpt" | "hero">
 ) {
     return prisma.post.update({ where: { slug: post.slug }, data: post })
 }
