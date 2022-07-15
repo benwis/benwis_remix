@@ -35,7 +35,8 @@ const textarea = (post: Post) => {
     const style2 = Style.new();
     style2.color = createRgba(20, 25, 255, 255);
     style2.font_size = 100;
-    textarea.push(" World", style2);
+    invariant(post.excerpt, "Post Excerpt is required!")
+    textarea.push(post.excerpt, style2);
 
     return textarea;
 };
@@ -54,7 +55,7 @@ export const generateImage = async (w: number, h: number, post: Post) => {
     writer.set_textarea(
         textarea(post),
         textareaStyle,
-        await fetchFont("/example.ttf")
+        await fetchFont("http://localhost:3000/fonts/Neue Plak Regular.ttf")
     );
 
     writer.paint();
@@ -73,9 +74,11 @@ export const render = async (w: number, h: number, post: Post) => {
     const ctx = canvas.getContext("2d");
     invariant(ctx, "canvas needs to have context 2d")
 
+    // let canvas = renderCanvas(data, w, h);
+
     let imageData = new ImageData(new Uint8ClampedArray(data.buffer), w, h);
 
     ctx.putImageData(imageData, 0, 0);
+    // return canvas;
 };
 
-// render(800, 500);

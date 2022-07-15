@@ -15,13 +15,11 @@ export const loader: LoaderFunction = async ({
     const post = await getPost(params.slug);
     invariant(post, `Post not found: ${params.slug}`);
 
-    const admin = await isMe(request);
-
     //Extract front matter from md
     const {content} = matter(post.markdown);
     const {content: html_content, toc} = processMarkdownToHtml(content); 
 
-    return json<LoaderData>({ admin, post, html: html_content, toc });
+    return json<LoaderData>({ admin: await isMe(request), post, html: html_content, toc });
 };
 
 export const meta: MetaFunction = ({data}: {data: LoaderData}) => {
