@@ -30,7 +30,7 @@
     "/public/build"
   ],
   "dependencies": {
-    "@benwis/femark": "file:../femark",
+    "@benwis/femark": "^0.1.0",
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^1.0.6",
     "@prisma/client": "^4.0.0",
@@ -41,7 +41,6 @@
     "bcryptjs": "^2.4.3",
     "clsx": "^1.2.1",
     "gray-matter": "^4.0.3",
-    "og_image_writer": "file:../og_image_writer/wasm",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tiny-invariant": "^1.2.0"

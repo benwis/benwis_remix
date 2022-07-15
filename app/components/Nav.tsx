@@ -3,7 +3,6 @@ import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Theme, useTheme } from "~/utils/theme-provider";
-import type { User } from "@prisma/client";
 import { Form } from "@remix-run/react";
 
 const navigation = [
@@ -14,7 +13,7 @@ const navigation = [
 
   ]
   
-export function Nav({admin = true, user}:{admin?: boolean, user?: User | null}) {
+export function Nav({admin = true, email}:{admin?: boolean, email?: string | null}) {
 
     const [currentTheme, setTheme] = useTheme();
     
@@ -79,7 +78,7 @@ export function Nav({admin = true, user}:{admin?: boolean, user?: User | null}) 
                   }
                 </span>
                 <span className="inline-flex rounded-md shadow mx-4">
-                  {user ? <Form method="post" action="logout">
+                  {email ? <Form method="post" action="logout">
                     <button
                         type="submit"
                         className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-gray-700 bg-yellow-400 dark:text-text-gray-700 hover:bg-yellow-600"

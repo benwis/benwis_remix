@@ -79,7 +79,7 @@ function App() {
       )}
       </head>
       <body className="h-screen bg-white dark:bg-gray-900 max-w-5xl mx-auto flex flex-col">
-        <Nav admin={admin} user={user}/>
+        <Nav admin={admin} email={user?.email}/>
         <Outlet />
         <Footer/>
         <ThemeBody ssrTheme={Boolean(data.theme)} />
