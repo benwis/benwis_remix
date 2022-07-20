@@ -2,12 +2,20 @@ import { RemixBrowser } from "@remix-run/react";
 import { hydrateRoot } from 'react-dom/client';
 import * as React from "react";
 
-requestIdleCallback(() => {
+function hydrate() {
     React.startTransition(() => {
-        hydrateRoot(document, 
-            <React.StrictMode>
-                <RemixBrowser />
-                </React.StrictMode>
-        );
+      hydrateRoot(
+        document,
+        <React.StrictMode>
+          <RemixBrowser />
+        </React.StrictMode>
+      );
     });
-});
+  }
+  
+  if (window.requestIdleCallback) {
+    window.requestIdleCallback(hydrate);
+  } else {
+    window.setTimeout(hydrate, 1);
+  }
+  
