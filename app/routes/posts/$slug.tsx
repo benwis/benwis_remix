@@ -22,7 +22,7 @@ export const loader: LoaderFunction = async ({
     return json<LoaderData>({ admin: await isMe(request), post, html: html_content, toc });
 };
 
-export const meta: MetaFunction = ({data}: {data: LoaderData}) => {
+export const meta: MetaFunction = ({data, location}: {data: LoaderData, location: any}) => {
 	if (!data || !data.post) {
 		return {};
 	}
@@ -30,7 +30,17 @@ export const meta: MetaFunction = ({data}: {data: LoaderData}) => {
 	return {
 		'og:title': data.post.title,
 		'og:description': data.post.excerpt,
-		'og:image': `https://benw.is/action/meta/${data.post.slug}`,
+		'og:image': `https://benwis.imgix.net/ben_catcarbon.jpeg`,
+    "twitter:site": "@iambenwis",
+    "og:site_name": "benw.is",
+    "og:locale": "en-us",
+    "og:type": "article",
+    "og:url": `https://benw.is${location.pathname}`,
+    "twitter:title": data.post.title,
+    "twitter:card": "summary",
+    "twitter:image": "https://benwis.imgix.net/ben_catcarbon.jpeg",
+    "twitter:description": data.post.excerpt,
+    "description": data.post.excerpt,
 	}
 }
   
@@ -38,7 +48,7 @@ export const meta: MetaFunction = ({data}: {data: LoaderData}) => {
     const { admin, post, html, toc } = useLoaderData<LoaderData>();
     let postDate = new Date(post.createdAt).toDateString();
     return (
-      <main className="mx-auto max-w-prose min-w-prose px-6">
+      <main className="mx-auto max-w-prose min-w-prose">
         <div className="w-full">
 
         <div className="flex justify-between w-full">
