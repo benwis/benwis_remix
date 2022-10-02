@@ -34,7 +34,7 @@ export default function Posts() {
       <ul>
         {posts.map((post) => {
           let postDate = new Date(post.createdAt).toDateString();
-          return (
+          return post.published ? (
           <ul key={post.slug}>
             <Link
               to={post.slug}
@@ -49,7 +49,7 @@ export default function Posts() {
             </li>
             </Link>
           </ul>
-        )})}
+        ) : null})}
       </ul>
     </main>
   );

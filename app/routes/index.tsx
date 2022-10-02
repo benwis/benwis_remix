@@ -74,10 +74,10 @@ export default function Index() {
 		<div className="flex flex-col gap-6 md:flex-row">
 			{posts.map((post) => {
 				let postDate = new Date(post.createdAt).toDateString();
-				return (
+				return post.published ? (
 				<FeatureCard key={post.slug} title={post.title} href={`posts/${post.slug}`} date={postDate} />
 
-			)})}			
+			): null})}			
 		</div>
 		<Link
 			className="mt-8 flex h-6 rounded-lg leading-7 text-gray-600 

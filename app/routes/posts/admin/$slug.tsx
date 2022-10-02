@@ -33,6 +33,8 @@ type ActionData =
       excerpt: null | string;
       markdown: null | string;
       hero: null | string;
+      published: null | string;
+      preview : null | string;
     }
   | undefined;
 
@@ -46,6 +48,8 @@ export const action: ActionFunction = async ({
   const excerpt = formData.get("excerpt");
   const markdown = formData.get("markdown");
   const hero = formData.get("hero");
+  let published = formData.get("published");
+  let preview = formData.get("preview");
 
   const deleteButton = formData.get("deleteButton");
 
@@ -63,8 +67,10 @@ export const action: ActionFunction = async ({
     excerpt: excerpt ? null : "Excerpt is required",
     markdown: markdown ? null : "Markdown is required",
     hero: hero? null : "Hero is required",
-
+    published: published ? null : "Published is required",
+    preview: preview ? null : "Preview is required",
   };
+
   const hasErrors = Object.values(errors).some(
     (errorMessage) => errorMessage
   );
@@ -92,7 +98,23 @@ export const action: ActionFunction = async ({
     typeof hero === "string",
     "hero must be a string"
   );
-  await updatePost({ title, slug, excerpt, markdown, hero });
+  invariant(
+    typeof published === "string",
+    "published must be a string"
+  );
+  invariant(
+    typeof preview === "string",
+    "preview must be a string"
+  );
+  published = JSON.parse(published.toLowerCase()) || false;
+  preview = JSON.parse(preview.toLowerCase()) || false;
+  invariant(
+    typeof published == "boolean", "published must be a boolean"
+  )
+  invariant(
+    typeof preview == "boolean", "preview must be a boolean"
+  )
+  await updatePost({ title, slug, excerpt, markdown, hero, published, preview });
 
   return redirect(`/posts/admin/${slug}`);
 };
@@ -147,6 +169,38 @@ export default function AdminPost() {
           className={inputClassName}
           defaultValue={post.hero || ""}
         />
+      </label>
+    </p>
+    <p>
+      <label>
+        Published:{" "}
+        {errors?.published ? (
+          <em className="text-red-600">{errors.published}</em>
+        ) : null}
+        <select
+          name="published"
+          className={inputClassName}
+          defaultValue={post.published?.toString() || "false"}
+        >
+          <option value="false">False</option>
+          <option value="true">True</option>
+          </select>
+      </label>
+    </p>
+    <p>
+      <label>
+        Preview:{" "}
+        {errors?.preview ? (
+          <em className="text-red-600">{errors.preview}</em>
+        ) : null}
+        <select
+          name="preview"
+          className={inputClassName}
+          defaultValue={post.preview?.toString() || "false"}
+        >
+          <option value="false">False</option>
+          <option value="true">True</option>
+          </select>
       </label>
     </p>
     <p>
