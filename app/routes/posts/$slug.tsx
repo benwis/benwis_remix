@@ -1,4 +1,4 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -14,6 +14,11 @@ export const loader: LoaderFunction = async ({
     invariant(params.slug, `params.slug is required`);
     const post = await getPost(params.slug);
     invariant(post, `Post not found: ${params.slug}`);
+
+    // Redirect if post is not published or previewed
+    if (!post.published && !post.preview){
+      return redirect("/posts")
+    }
 
     //Extract front matter from md
     const {content} = matter(post.markdown);
@@ -47,7 +52,7 @@ export const meta: MetaFunction = ({data, location}: {data: LoaderData, location
   export default function PostSlug() {
     const { admin, post, html, toc } = useLoaderData<LoaderData>();
     let postDate = new Date(post.createdAt).toDateString();
-    return (
+    return (post.published || post.preview) ? (
       <main className="mx-auto max-w-prose min-w-prose">
         <div className="w-full">
 
@@ -75,5 +80,5 @@ export const meta: MetaFunction = ({data, location}: {data: LoaderData, location
         <div className="text-black prose lg:prose-xl dark:prose-invert dark:text-white text-base w-full mt-8" dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </main>
-    );
+    ): null;
   }
