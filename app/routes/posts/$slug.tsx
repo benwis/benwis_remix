@@ -42,6 +42,7 @@ export const meta: MetaFunction = ({data, location}: {data: LoaderData, location
     "og:type": "article",
     "og:url": `https://benw.is${location.pathname}`,
     "twitter:title": data.post.title,
+    "title": data.post.title,
     "twitter:card": "summary",
     "twitter:image": "https://benwis.imgix.net/ben_catcarbon.jpeg",
     "twitter:description": data.post.excerpt,
