@@ -53,8 +53,8 @@ export const meta: MetaFunction = ({data, location}: {data: LoaderData, location
     const { admin, post, html, toc } = useLoaderData<LoaderData>();
     let postDate = new Date(post.createdAt).toDateString();
     return (post.published || post.preview) ? (
-      <main className="mx-auto max-w-prose min-w-prose">
-        <div className="w-full">
+      <main className="px-4 max-w-5xl">
+        <div className="">
 
         <div className="flex justify-between w-full">
             <Link to="/posts" className="dark:text-white">Back to Posts</Link>
@@ -73,11 +73,11 @@ export const meta: MetaFunction = ({data, location}: {data: LoaderData, location
 	/>
    {toc ? <section className="dark:bg-gray-800 p-4 mt-4 table-of-contents-parent">
             <h2 className="text-xl text-black dark:text-white md:text-2xl">Contents</h2>
-            <div className="text-black prose lg:prose-xl dark:prose-invert dark:text-white text-base w-full" dangerouslySetInnerHTML={{ __html: toc }} />   
+            <div className="text-black prose lg:prose-xl dark:prose-invert dark:text-white text-base md: w-full" dangerouslySetInnerHTML={{ __html: toc }} />   
           </section>: null}
           
 
-        <div className="text-black prose lg:prose-xl dark:prose-invert dark:text-white text-base w-full mt-8" dangerouslySetInnerHTML={{ __html: html }} />
+        <div className="text-black prose lg:prose-xl dark:prose-invert dark:text-white text-base mt-8" dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </main>
     ): null;

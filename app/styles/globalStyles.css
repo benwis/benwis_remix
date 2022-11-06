@@ -1,10 +1,11 @@
 @font-face {
-	font-family: 'JetBrains Mono';
-	src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2'),
-		url('/fonts/JetBrainsMono-Regular.ttf') format('ttf');
+	font-family: 'Berkeley Mono';
+	src: url('/fonts/BerkeleyMono-Regular.woff2') format('woff2'),
+		url('/fonts/BerkeleyMono-Regular.ttf') format('woff');
 	font-display: swap;
 
 }
+
 @font-face {
 	font-family: 'Neue Plak Regular';
 	 src: url('/fonts/Neue Plak Regular.ttf') format('truetype');
@@ -149,11 +150,11 @@ pre {
     padding: 0;
     border: 1px solid #facc15;
 	margin: 1.8rem 0;
-	font-family: 'JetBrains Mono', monospace;
+	font-family: 'Berkeley Mono','JetBrains Mono', monospace;
 }
 .code-block-inner{
 	padding: 0.8rem;
-	font-family: 'JetBrains Mono', monospace;
+	font-family: 'Berkeley Mono','JetBrains Mono', monospace;
 	margin: 0 0;
 
 }
