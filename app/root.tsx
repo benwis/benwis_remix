@@ -69,7 +69,6 @@ function App() {
         <Meta />
         <Links />
         <ThemeHead ssrTheme={Boolean(data.theme)} />
-        <a rel="me" href="https://hachyderm.io/@benwis">Mastodon</a>
         {env === "production" && (
         <script
           src="https://clean-piano.benw.is/script.js"
