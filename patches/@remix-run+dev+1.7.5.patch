@@ -1,50 +1,31 @@
-diff --git a/node_modules/@remix-run/dev/.DS_Store b/node_modules/@remix-run/dev/.DS_Store
-new file mode 100644
-index 0000000..e69de29
-diff --git a/node_modules/@remix-run/dev/dist/compiler.js b/node_modules/@remix-run/dev/dist/compiler.js
-index 9d39471..8f99ec2 100644
---- a/node_modules/@remix-run/dev/dist/compiler.js
-+++ b/node_modules/@remix-run/dev/dist/compiler.js
-@@ -29,6 +29,7 @@ var loaders = require('./compiler/loaders.js');
- var browserRouteModulesPlugin = require('./compiler/plugins/browserRouteModulesPlugin.js');
- var emptyModulesPlugin = require('./compiler/plugins/emptyModulesPlugin.js');
- var mdx = require('./compiler/plugins/mdx.js');
-+var nativeNodeModules = require('./compiler/plugins/nativeNodeModules.js');
- var serverAssetsManifestPlugin = require('./compiler/plugins/serverAssetsManifestPlugin.js');
- var serverBareModulesPlugin = require('./compiler/plugins/serverBareModulesPlugin.js');
- var serverEntryModulePlugin = require('./compiler/plugins/serverEntryModulePlugin.js');
-@@ -36,7 +37,7 @@ var serverRouteModulesPlugin = require('./compiler/plugins/serverRouteModulesPlu
- var fs = require('./compiler/utils/fs.js');
- var urlImportsPlugin = require('./compiler/plugins/urlImportsPlugin.js');
- 
--function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-+function _interopDefaultLegacy(e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
- 
- function _interopNamespace(e) {
-   if (e && e.__esModule) return e;
-@@ -254,7 +255,7 @@ async function watch(config$1, {
-     }
-   });
-   return async () => {
--    await watcher.close().catch(() => {});
-+    await watcher.close().catch(() => { });
-     disposeBuilders();
-   };
- }
-@@ -365,6 +366,9 @@ function createServerBuild(config, options, assetsManifestPromiseRef) {
-   if (config.serverPlatform !== "node") {
+diff --git a/node_modules/@remix-run/dev/dist/compiler/compilerServer.js b/node_modules/@remix-run/dev/dist/compiler/compilerServer.js
+index fc9b1e2..397d1af 100644
+--- a/node_modules/@remix-run/dev/dist/compiler/compilerServer.js
++++ b/node_modules/@remix-run/dev/dist/compiler/compilerServer.js
+@@ -23,6 +23,7 @@ var emptyModulesPlugin = require('./plugins/emptyModulesPlugin.js');
+ var mdx = require('./plugins/mdx.js');
+ var serverAssetsManifestPlugin = require('./plugins/serverAssetsManifestPlugin.js');
+ var serverBareModulesPlugin = require('./plugins/serverBareModulesPlugin.js');
++var nativeNodeModules = require('./plugins/nativeNodeModules.js');
+ var serverEntryModulePlugin = require('./plugins/serverEntryModulePlugin.js');
+ var serverRouteModulesPlugin = require('./plugins/serverRouteModulesPlugin.js');
+ var urlImportsPlugin = require('./plugins/urlImportsPlugin.js');
+@@ -71,6 +72,10 @@ const createEsbuildConfig = (config, assetsManifestChannel, options) => {
      plugins.unshift(nodeModulesPolyfill.NodeModulesPolyfillPlugin());
    }
+ 
 +  if (config.serverPlatform == "node") {
 +    plugins.unshift(nativeNodeModules.nativeNodeModulesPlugin());
 +  }
- 
-   return esbuild__namespace.build({
++
+   return {
      absWorkingDir: config.rootDirectory,
-@@ -434,6 +438,16 @@ async function writeServerBuildResult(config, outputFiles) {
+     stdin,
+@@ -131,7 +136,18 @@ async function writeServerBuildResult(config, outputFiles) {
        let contents = Buffer.from(file.contents).toString("utf-8");
        contents = contents.replace(/"route:/gm, '"');
        await fse__namespace.writeFile(file.path, contents);
+-    } else {
 +    } else if (file.path.endsWith(".node")) {
 +      // Check for and make _assets folder if it does not exist in the directory
 +      // I suspect this is usually done elsewhere
@@ -55,14 +36,26 @@ index 9d39471..8f99ec2 100644
 +
 +      // Write the binary .node file to the same path and with the same contents as expected
 +      await fse__namespace.writeFile(file.path, file.contents)
-     }
-   }
- }
++    }
++    else {
+       let assetPath = path__namespace.join(config.assetsBuildDirectory, file.path.replace(path__namespace.dirname(config.serverBuildPath), ""));
+       await fse__namespace.ensureDir(path__namespace.dirname(assetPath));
+       await fse__namespace.writeFile(assetPath, file.contents);
+@@ -144,7 +160,8 @@ const createServerCompiler = (remixConfig, options) => {
+     let esbuildConfig = createEsbuildConfig(remixConfig, manifestChannel, options);
+     let {
+       outputFiles
+-    } = await esbuild__namespace.build({ ...esbuildConfig,
++    } = await esbuild__namespace.build({
++      ...esbuildConfig,
+       write: false
+     });
+     await writeServerBuildResult(remixConfig, outputFiles);
 diff --git a/node_modules/@remix-run/dev/dist/compiler/loaders.js b/node_modules/@remix-run/dev/dist/compiler/loaders.js
-index 8bc17d0..d0851d6 100644
+index 1b98520..4c197ba 100644
 --- a/node_modules/@remix-run/dev/dist/compiler/loaders.js
 +++ b/node_modules/@remix-run/dev/dist/compiler/loaders.js
-@@ -59,6 +59,7 @@ const loaders = {
+@@ -63,6 +63,7 @@ const loaders = {
    ".ts": "ts",
    ".tsx": "tsx",
    ".ttf": "file",
@@ -81,22 +74,10 @@ index 0000000..d51dc9b
 \ No newline at end of file
 diff --git a/node_modules/@remix-run/dev/dist/compiler/plugins/nativeNodeModules.js b/node_modules/@remix-run/dev/dist/compiler/plugins/nativeNodeModules.js
 new file mode 100644
-index 0000000..2f0bec7
+index 0000000..dd831f3
 --- /dev/null
 +++ b/node_modules/@remix-run/dev/dist/compiler/plugins/nativeNodeModules.js
-@@ -0,0 +1,98 @@
-+/**
-+ * @remix-run/dev v1.4.3
-+ *
-+ * Copyright (c) Remix Software Inc.
-+ *
-+ * This source code is licensed under the MIT license found in the
-+ * LICENSE.md file in the root directory of this source tree.
-+ *
-+ * @license MIT
-+ */
-+'use strict';
-+
+@@ -0,0 +1,86 @@
 +Object.defineProperty(exports, '__esModule', { value: true });
 +var path = require('path');
 +
@@ -185,10 +166,10 @@ index 0000000..2f0bec7
 +exports.nativeNodeModulesPlugin = nativeNodeModulesPlugin;
 \ No newline at end of file
 diff --git a/node_modules/@remix-run/dev/dist/modules.d.ts b/node_modules/@remix-run/dev/dist/modules.d.ts
-index 4bc9a62..ce8e35c 100644
+index 87516fe..2f4582c 100644
 --- a/node_modules/@remix-run/dev/dist/modules.d.ts
 +++ b/node_modules/@remix-run/dev/dist/modules.d.ts
-@@ -69,6 +69,10 @@ declare module "*.ttf" {
+@@ -85,6 +85,10 @@ declare module "*.ttf" {
      let asset: string;
      export default asset;
  }

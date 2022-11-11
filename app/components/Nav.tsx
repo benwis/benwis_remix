@@ -1,7 +1,6 @@
 import { Link, NavLink } from "@remix-run/react";
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { Theme, useTheme } from "~/utils/theme-provider";
 import { Form } from "@remix-run/react";
 
@@ -10,7 +9,6 @@ const navigation = [
     { name: 'Blog', href: 'posts' },
     { name: 'About Me', href: 'about' },
     { name: 'Portfolio', href: 'portfolio' },
-
   ]
   
 export function Nav({admin = true, email}:{admin?: boolean, email?: string | null}) {
@@ -42,7 +40,9 @@ export function Nav({admin = true, email}:{admin?: boolean, email?: string | nul
                   <div className="-mr-2 flex items-center md:hidden">
                     <Popover.Button className="bg-gray-50  dark:bg-gray-900 dark:text-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:decoration-yellow-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                       <span className="sr-only">Open main menu</span>
-                      <MenuIcon className="h-6 w-6" aria-hidden="true" />
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                        <path fillRule="evenodd" d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z" clipRule="evenodd" />
+                      </svg>
                     </Popover.Button>
                   </div>
                 </div>
@@ -114,7 +114,9 @@ export function Nav({admin = true, email}:{admin?: boolean, email?: string | nul
                   <div className="-mr-2">
                     <Popover.Button className="bg-white dark:bg-gray-900 dark:text-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                       <span className="sr-only">Close menu</span>
-                      <XIcon className="h-6 w-6" aria-hidden="true" />
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                        <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clipRule="evenodd" />
+                      </svg>
                     </Popover.Button>
                   </div>
                 </div>
